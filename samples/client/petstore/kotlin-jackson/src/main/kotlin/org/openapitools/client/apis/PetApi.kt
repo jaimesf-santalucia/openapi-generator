@@ -16,7 +16,7 @@
 package org.openapitools.client.apis
 
 import java.io.IOException
-import okhttp3.OkHttpClient
+import okhttp3.Call
 import okhttp3.HttpUrl
 
 import org.openapitools.client.models.ModelApiResponse
@@ -38,7 +38,7 @@ import org.openapitools.client.infrastructure.ResponseType
 import org.openapitools.client.infrastructure.Success
 import org.openapitools.client.infrastructure.toMultiValue
 
-class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = ApiClient.defaultClient) : ApiClient(basePath, client) {
+class PetApi(basePath: kotlin.String = defaultBasePath, client: Call.Factory = ApiClient.defaultClient) : ApiClient(basePath, client) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -47,6 +47,7 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
     }
 
     /**
+     * POST /pet
      * Add a new pet to the store
      * 
      * @param body Pet object that needs to be added to the store
@@ -71,12 +72,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * POST /pet
      * Add a new pet to the store
      * 
      * @param body Pet object that needs to be added to the store
@@ -110,11 +112,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet",
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
 
     /**
+     * DELETE /pet/{petId}
      * Deletes a pet
      * 
      * @param petId Pet id to delete
@@ -140,12 +144,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * DELETE /pet/{petId}
      * Deletes a pet
      * 
      * @param petId Pet id to delete
@@ -181,6 +186,7 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet/{petId}".replace("{"+"petId"+"}", encodeURIComponent(petId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
@@ -188,13 +194,24 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
     /**
      * enum for parameter status
      */
-     enum class Status_findPetsByStatus(val value: kotlin.String) {
+     enum class StatusFindPetsByStatus(val value: kotlin.String) {
          @JsonProperty(value = "available") AVAILABLE("available"),
          @JsonProperty(value = "pending") PENDING("pending"),
-         @JsonProperty(value = "sold") SOLD("sold")
+         @JsonProperty(value = "sold") SOLD("sold"),
+         @JsonProperty(value = "unknown_default_open_api") UNKNOWN_DEFAULT_OPEN_API("unknown_default_open_api");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
      }
 
     /**
+     * GET /pet/findByStatus
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter
@@ -207,7 +224,7 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPetsByStatus(status: kotlin.collections.List<Status_findPetsByStatus>) : kotlin.collections.List<Pet> {
+    fun findPetsByStatus(status: kotlin.collections.List<StatusFindPetsByStatus>) : kotlin.collections.List<Pet> {
         val localVarResponse = findPetsByStatusWithHttpInfo(status = status)
 
         return when (localVarResponse.responseType) {
@@ -220,12 +237,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * GET /pet/findByStatus
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
      * @param status Status values that need to be considered for filter
@@ -235,7 +253,7 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun findPetsByStatusWithHttpInfo(status: kotlin.collections.List<Status_findPetsByStatus>) : ApiResponse<kotlin.collections.List<Pet>?> {
+    fun findPetsByStatusWithHttpInfo(status: kotlin.collections.List<StatusFindPetsByStatus>) : ApiResponse<kotlin.collections.List<Pet>?> {
         val localVariableConfig = findPetsByStatusRequestConfig(status = status)
 
         return request<Unit, kotlin.collections.List<Pet>>(
@@ -249,7 +267,7 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
      * @param status Status values that need to be considered for filter
      * @return RequestConfig
      */
-    fun findPetsByStatusRequestConfig(status: kotlin.collections.List<Status_findPetsByStatus>) : RequestConfig<Unit> {
+    fun findPetsByStatusRequestConfig(status: kotlin.collections.List<StatusFindPetsByStatus>) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
             .apply {
@@ -263,11 +281,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet/findByStatus",
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
 
     /**
+     * GET /pet/findByTags
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by
@@ -295,12 +315,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * GET /pet/findByTags
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      * @param tags Tags to filter by
@@ -341,11 +362,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet/findByTags",
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
 
     /**
+     * GET /pet/{petId}
      * Find pet by ID
      * Returns a single pet
      * @param petId ID of pet to return
@@ -371,12 +394,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * GET /pet/{petId}
      * Find pet by ID
      * Returns a single pet
      * @param petId ID of pet to return
@@ -411,11 +435,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet/{petId}".replace("{"+"petId"+"}", encodeURIComponent(petId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
 
     /**
+     * PUT /pet
      * Update an existing pet
      * 
      * @param body Pet object that needs to be added to the store
@@ -440,12 +466,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * PUT /pet
      * Update an existing pet
      * 
      * @param body Pet object that needs to be added to the store
@@ -479,11 +506,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet",
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
 
     /**
+     * POST /pet/{petId}
      * Updates a pet in the store with form data
      * 
      * @param petId ID of pet that needs to be updated
@@ -510,12 +539,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * POST /pet/{petId}
      * Updates a pet in the store with form data
      * 
      * @param petId ID of pet that needs to be updated
@@ -554,11 +584,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet/{petId}".replace("{"+"petId"+"}", encodeURIComponent(petId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }
 
     /**
+     * POST /pet/{petId}/uploadImage
      * uploads an image
      * 
      * @param petId ID of pet to update
@@ -586,12 +618,13 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             }
             ResponseType.ServerError -> {
                 val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
             }
         }
     }
 
     /**
+     * POST /pet/{petId}/uploadImage
      * uploads an image
      * 
      * @param petId ID of pet to update
@@ -632,6 +665,7 @@ class PetApi(basePath: kotlin.String = defaultBasePath, client: OkHttpClient = A
             path = "/pet/{petId}/uploadImage".replace("{"+"petId"+"}", encodeURIComponent(petId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
+            requiresAuthentication = true,
             body = localVariableBody
         )
     }

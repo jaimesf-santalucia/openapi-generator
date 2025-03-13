@@ -29,9 +29,15 @@ import com.fasterxml.jackson.databind.ObjectMapper
     httpClientEngine: HttpClientEngine? = null,
     httpClientConfig: ((HttpClientConfig<*>) -> Unit)? = null,
     jsonBlock: ObjectMapper.() -> Unit = ApiClient.JSON_DEFAULT,
-    ) : ApiClient(baseUrl, httpClientEngine, httpClientConfig, jsonBlock) {
+    ) : ApiClient(
+        baseUrl,
+        httpClientEngine,
+        httpClientConfig,
+        jsonBlock,
+    ) {
 
         /**
+        * POST /user
         * Create user
         * This can only be done by the logged in user.
          * @param body Created user object 
@@ -51,7 +57,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.POST,
             "/user",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return jsonRequest(
@@ -62,6 +69,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * POST /user/createWithArray
         * Creates list of users with given input array
         * 
          * @param body List of user object 
@@ -81,7 +89,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.POST,
             "/user/createWithArray",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return jsonRequest(
@@ -92,6 +101,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * POST /user/createWithList
         * Creates list of users with given input array
         * 
          * @param body List of user object 
@@ -111,7 +121,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.POST,
             "/user/createWithList",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return jsonRequest(
@@ -122,6 +133,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * DELETE /user/{username}
         * Delete user
         * This can only be done by the logged in user.
          * @param username The name that needs to be deleted 
@@ -142,7 +154,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.DELETE,
             "/user/{username}".replace("{" + "username" + "}", "$username"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return request(
@@ -153,6 +166,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * GET /user/{username}
         * Get user by user name
         * 
          * @param username The name that needs to be fetched. Use user1 for testing. 
@@ -174,7 +188,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.GET,
             "/user/{username}".replace("{" + "username" + "}", "$username"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return request(
@@ -185,6 +200,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * GET /user/login
         * Logs user into the system
         * 
          * @param username The user name for login 
@@ -209,7 +225,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.GET,
             "/user/login",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return request(
@@ -220,6 +237,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * GET /user/logout
         * Logs out current logged in user session
         * 
          * @return void
@@ -239,7 +257,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.GET,
             "/user/logout",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return request(
@@ -250,6 +269,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
             }
 
         /**
+        * PUT /user/{username}
         * Updated user
         * This can only be done by the logged in user.
          * @param username name that need to be deleted 
@@ -270,7 +290,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
             RequestMethod.PUT,
             "/user/{username}".replace("{" + "username" + "}", "$username"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = false,
             )
 
             return jsonRequest(
