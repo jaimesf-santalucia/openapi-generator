@@ -15,6 +15,7 @@ package org.openapitools.client.api;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
 import org.openapitools.client.Pair;
 
 import org.openapitools.client.model.Order;
@@ -22,8 +23,21 @@ import org.openapitools.client.model.Order;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+
 import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.http.HttpRequest;
+import java.nio.channels.Channels;
+import java.nio.channels.Pipe;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -39,7 +53,7 @@ import java.util.function.Consumer;
 
 import java.util.concurrent.CompletableFuture;
 
-@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0-SNAPSHOT")
 public class StoreApi {
   private final HttpClient memberVarHttpClient;
   private final ObjectMapper memberVarObjectMapper;
@@ -50,7 +64,7 @@ public class StoreApi {
   private final Consumer<HttpResponse<String>> memberVarAsyncResponseInterceptor;
 
   public StoreApi() {
-    this(new ApiClient());
+    this(Configuration.getDefaultApiClient());
   }
 
   public StoreApi(ApiClient apiClient) {
@@ -153,6 +167,7 @@ public class StoreApi {
     }
     return localVarRequestBuilder;
   }
+
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
@@ -239,6 +254,7 @@ public class StoreApi {
     }
     return localVarRequestBuilder;
   }
+
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generate exceptions
@@ -332,16 +348,17 @@ public class StoreApi {
     }
     return localVarRequestBuilder;
   }
+
   /**
    * Place an order for a pet
    * 
-   * @param body order placed for purchasing the pet (required)
+   * @param order order placed for purchasing the pet (required)
    * @return CompletableFuture&lt;Order&gt;
    * @throws ApiException if fails to make API call
    */
-  public CompletableFuture<Order> placeOrder(Order body) throws ApiException {
+  public CompletableFuture<Order> placeOrder(Order order) throws ApiException {
     try {
-      HttpRequest.Builder localVarRequestBuilder = placeOrderRequestBuilder(body);
+      HttpRequest.Builder localVarRequestBuilder = placeOrderRequestBuilder(order);
       return memberVarHttpClient.sendAsync(
           localVarRequestBuilder.build(),
           HttpResponse.BodyHandlers.ofString()).thenComposeAsync(localVarResponse -> {
@@ -366,13 +383,13 @@ public class StoreApi {
   /**
    * Place an order for a pet
    * 
-   * @param body order placed for purchasing the pet (required)
+   * @param order order placed for purchasing the pet (required)
    * @return CompletableFuture&lt;ApiResponse&lt;Order&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public CompletableFuture<ApiResponse<Order>> placeOrderWithHttpInfo(Order body) throws ApiException {
+  public CompletableFuture<ApiResponse<Order>> placeOrderWithHttpInfo(Order order) throws ApiException {
     try {
-      HttpRequest.Builder localVarRequestBuilder = placeOrderRequestBuilder(body);
+      HttpRequest.Builder localVarRequestBuilder = placeOrderRequestBuilder(order);
       return memberVarHttpClient.sendAsync(
           localVarRequestBuilder.build(),
           HttpResponse.BodyHandlers.ofString()).thenComposeAsync(localVarResponse -> {
@@ -401,10 +418,10 @@ public class StoreApi {
     }
   }
 
-  private HttpRequest.Builder placeOrderRequestBuilder(Order body) throws ApiException {
-    // verify the required parameter 'body' is set
-    if (body == null) {
-      throw new ApiException(400, "Missing the required parameter 'body' when calling placeOrder");
+  private HttpRequest.Builder placeOrderRequestBuilder(Order order) throws ApiException {
+    // verify the required parameter 'order' is set
+    if (order == null) {
+      throw new ApiException(400, "Missing the required parameter 'order' when calling placeOrder");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
@@ -417,7 +434,7 @@ public class StoreApi {
     localVarRequestBuilder.header("Accept", "application/xml, application/json");
 
     try {
-      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(body);
+      byte[] localVarPostBody = memberVarObjectMapper.writeValueAsBytes(order);
       localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.ofByteArray(localVarPostBody));
     } catch (IOException e) {
       throw new ApiException(e);
@@ -430,4 +447,5 @@ public class StoreApi {
     }
     return localVarRequestBuilder;
   }
+
 }

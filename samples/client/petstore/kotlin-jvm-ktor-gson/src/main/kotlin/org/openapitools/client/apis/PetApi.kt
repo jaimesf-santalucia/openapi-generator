@@ -32,9 +32,15 @@ import java.text.DateFormat
     httpClientEngine: HttpClientEngine? = null,
     httpClientConfig: ((HttpClientConfig<*>) -> Unit)? = null,
     jsonBlock: GsonBuilder.() -> Unit = ApiClient.JSON_DEFAULT,
-    ) : ApiClient(baseUrl, httpClientEngine, httpClientConfig, jsonBlock) {
+    ) : ApiClient(
+        baseUrl,
+        httpClientEngine,
+        httpClientConfig,
+        jsonBlock,
+    ) {
 
         /**
+        * POST /pet
         * Add a new pet to the store
         * 
          * @param body Pet object that needs to be added to the store 
@@ -54,7 +60,8 @@ import java.text.DateFormat
             RequestMethod.POST,
             "/pet",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return jsonRequest(
@@ -65,6 +72,7 @@ import java.text.DateFormat
             }
 
         /**
+        * DELETE /pet/{petId}
         * Deletes a pet
         * 
          * @param petId Pet id to delete 
@@ -87,7 +95,8 @@ import java.text.DateFormat
             RequestMethod.DELETE,
             "/pet/{petId}".replace("{" + "petId" + "}", "$petId"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return request(
@@ -98,6 +107,7 @@ import java.text.DateFormat
             }
 
         /**
+        * GET /pet/findByStatus
         * Finds Pets by status
         * Multiple status values can be provided with comma separated strings
          * @param status Status values that need to be considered for filter 
@@ -120,7 +130,8 @@ import java.text.DateFormat
             RequestMethod.GET,
             "/pet/findByStatus",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return request(
@@ -131,6 +142,7 @@ import java.text.DateFormat
             }
 
         /**
+        * GET /pet/findByTags
         * Finds Pets by tags
         * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
          * @param tags Tags to filter by 
@@ -153,7 +165,8 @@ import java.text.DateFormat
             RequestMethod.GET,
             "/pet/findByTags",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return request(
@@ -164,6 +177,7 @@ import java.text.DateFormat
             }
 
         /**
+        * GET /pet/{petId}
         * Find pet by ID
         * Returns a single pet
          * @param petId ID of pet to return 
@@ -185,7 +199,8 @@ import java.text.DateFormat
             RequestMethod.GET,
             "/pet/{petId}".replace("{" + "petId" + "}", "$petId"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return request(
@@ -196,6 +211,7 @@ import java.text.DateFormat
             }
 
         /**
+        * PUT /pet
         * Update an existing pet
         * 
          * @param body Pet object that needs to be added to the store 
@@ -215,7 +231,8 @@ import java.text.DateFormat
             RequestMethod.PUT,
             "/pet",
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return jsonRequest(
@@ -226,6 +243,7 @@ import java.text.DateFormat
             }
 
         /**
+        * POST /pet/{petId}
         * Updates a pet in the store with form data
         * 
          * @param petId ID of pet that needs to be updated 
@@ -239,8 +257,8 @@ import java.text.DateFormat
 
             val localVariableBody = 
                         ParametersBuilder().also {
-                        name?.apply { it.append("name", name.toString()) }
-                        status?.apply { it.append("status", status.toString()) }
+                        name?.apply { it.append("name", name) }
+                        status?.apply { it.append("status", status) }
                         }.build()
 
             val localVariableQuery = mutableMapOf<String, List<String>>()
@@ -251,7 +269,8 @@ import java.text.DateFormat
             RequestMethod.POST,
             "/pet/{petId}".replace("{" + "petId" + "}", "$petId"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return urlEncodedFormRequest(
@@ -262,6 +281,7 @@ import java.text.DateFormat
             }
 
         /**
+        * POST /pet/{petId}/uploadImage
         * uploads an image
         * 
          * @param petId ID of pet to update 
@@ -288,7 +308,8 @@ import java.text.DateFormat
             RequestMethod.POST,
             "/pet/{petId}/uploadImage".replace("{" + "petId" + "}", "$petId"),
             query = localVariableQuery,
-            headers = localVariableHeaders
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
             )
 
             return multipartFormRequest(

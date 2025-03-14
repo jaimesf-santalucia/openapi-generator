@@ -17,8 +17,8 @@
 
 package org.openapitools.codegen.cmd.utils;
 
-import org.openapitools.codegen.utils.OptionUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.openapitools.codegen.utils.OptionUtils;
 import org.testng.annotations.Test;
 
 import java.util.Collections;
@@ -52,6 +52,10 @@ public class OptionUtilsTest {
         doTupleListTest("a=1,=,c=3", asList(Pair.of("a", "1"), Pair.of("c", "3")));
         doTupleListTest("", emptyPairList());
         doTupleListTest(null, emptyPairList());
+        doTupleListTest("a=1,b=2,c=\"3,4,5\"",
+                asList(Pair.of("a", "1"), Pair.of("b", "2"),
+                        Pair.of("c", "\"3,4,5\"")));
+
     }
 
     private static void doTupleListTest(String input, List<Pair<String, String>> expectedResults) {

@@ -97,8 +97,11 @@ class OpenApiGeneratorPlugin : Plugin<Project> {
                     generatorName.set(generate.generatorName)
                     outputDir.set(generate.outputDir)
                     inputSpec.set(generate.inputSpec)
+                    inputSpecRootDirectory.set(generate.inputSpecRootDirectory)
+                    inputSpecRootDirectorySkipMerge.set(generate.inputSpecRootDirectorySkipMerge)
                     remoteInputSpec.set(generate.remoteInputSpec)
                     templateDir.set(generate.templateDir)
+                    templateResourcePath.set(generate.templateResourcePath)
                     auth.set(generate.auth)
                     globalProperties.set(generate.globalProperties)
                     configFile.set(generate.configFile)
@@ -117,7 +120,11 @@ class OpenApiGeneratorPlugin : Plugin<Project> {
                     importMappings.set(generate.importMappings)
                     schemaMappings.set(generate.schemaMappings)
                     inlineSchemaNameMappings.set(generate.inlineSchemaNameMappings)
-                    inlineSchemaNameDefaults.set(generate.inlineSchemaNameDefaults)
+                    inlineSchemaOptions.set(generate.inlineSchemaOptions)
+                    nameMappings.set(generate.nameMappings)
+                    modelNameMappings.set(generate.modelNameMappings)
+                    parameterNameMappings.set(generate.parameterNameMappings)
+                    openapiNormalizer.set(generate.openapiNormalizer)
                     invokerPackage.set(generate.invokerPackage)
                     groupId.set(generate.groupId)
                     id.set(generate.id)
@@ -139,13 +146,14 @@ class OpenApiGeneratorPlugin : Plugin<Project> {
                     generateModelDocumentation.set(generate.generateModelDocumentation)
                     generateApiTests.set(generate.generateApiTests)
                     generateApiDocumentation.set(generate.generateApiDocumentation)
-                    withXml.set(generate.withXml)
                     configOptions.set(generate.configOptions)
                     logToStderr.set(generate.logToStderr)
                     enablePostProcessFile.set(generate.enablePostProcessFile)
                     skipValidateSpec.set(generate.skipValidateSpec)
                     generateAliasAsModel.set(generate.generateAliasAsModel)
                     engine.set(generate.engine)
+                    cleanupOutput.set(generate.cleanupOutput)
+                    dryRun.set(generate.dryRun)
                 }
             }
         }
@@ -155,4 +163,6 @@ class OpenApiGeneratorPlugin : Plugin<Project> {
         const val pluginGroup = "OpenAPI Tools"
     }
 }
+
+
 
